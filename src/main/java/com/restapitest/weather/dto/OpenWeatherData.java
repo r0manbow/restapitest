@@ -1,9 +1,17 @@
 package com.restapitest.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.restapitest.weather.service.OpenWeatherDataDeserializer;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@JsonDeserialize(using = OpenWeatherDataDeserializer.class)
 public class OpenWeatherData extends WeatherData {
 
 
@@ -52,6 +60,7 @@ public class OpenWeatherData extends WeatherData {
 
     @Data
     public static class Rain {
+        @JsonProperty("1h") // Add this annotation
         private double h1;
     }
 

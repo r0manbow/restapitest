@@ -1,10 +1,13 @@
 package com.restapitest.weather.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.restapitest.weather.constant.OpenWeatherConstant;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restapitest.weather.dto.OpenWeatherData;
 import com.restapitest.weather.dto.WeatherData;
+import com.restapitest.weather.dto.WeatherDataWrapper;
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -15,10 +18,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 @Service
-public class OpenWeatherService implements WeatherService <WeatherData>{
+public class OpenWeatherService {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    @Override
-    public WeatherData getWeatherData(String cityName) throws IOException, ParseException {
+
+    public WeatherDataWrapper getWeatherData(String cityName) throws IOException, ParseException {
         String url = OpenWeatherConstant.API_URL
                 + "?q="
                 + cityName
@@ -34,11 +37,11 @@ public class OpenWeatherService implements WeatherService <WeatherData>{
         CloseableHttpResponse response = httpClient.execute(httpGet);
         String jsonResponse = EntityUtils.toString(response.getEntity());
 
-        try {
-            OpenWeatherData openWeatherData = objectMapper.readValue(jsonResponse, OpenWeatherData.class);
-            return openWeatherData;
-        } catch (JsonMappingException e) {
-            throw new IOException("Failed to map JSON response to WeatherData", e);
+        WeatherData weatherData = objectMapper.readValue(jsonResponse, OpenWeatherData.class);
+
+        WeatherDataWrapper wrapper = new WeatherDataWrapper();
+        wrapper.setWeatherData(weatherData);
+        return wrapper;
         }
     }
-}
+

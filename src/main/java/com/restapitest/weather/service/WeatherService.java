@@ -1,10 +1,20 @@
 package com.restapitest.weather.service;
 
+import com.restapitest.weather.dto.WeatherData;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 @Service
-public interface WeatherService<T> {
+public class WeatherService {
+    @Autowired
+    private WeatherDataFactory dataFactory;
 
-    T getWeatherData(String cityName) throws IOException;
+    public WeatherService(WeatherDataFactory dataFactory) {
+        this.dataFactory = dataFactory;
+    }
+
+    public WeatherData getWeatherData(String apiResponse) {
+        return dataFactory.createWeatherData(apiResponse);
+    }
 }
