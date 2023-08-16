@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class OpenWeatherData {
+public class OpenWeatherData extends WeatherData {
+
 
     private Coord coord;
     private Weather[] weather;
