@@ -1,19 +1,14 @@
-package com.restapitest.weather.dto;
+package com.restapitest.weather.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.restapitest.weather.service.OpenWeatherDataDeserializer;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@JsonDeserialize(using = OpenWeatherDataDeserializer.class)
-public class OpenWeatherData extends WeatherData {
-
+public class WeatherData {
+    public static final String API_KEY = "9dff5cd4775b4839c591b1b3cc727c5d";
+    public static final String API_URL = "https://api.openweathermap.org/data/2.5/weather";
+    public static final String LANG_RU = "ru";
+    public static final String METRIC = "metric";
 
     private Coord coord;
     private Weather[] weather;

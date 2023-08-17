@@ -1,20 +1,10 @@
 package com.restapitest.weather.service;
 
-import com.restapitest.weather.dto.WeatherData;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.restapitest.weather.dto.WeatherResponseDTO;
+import org.apache.hc.core5.http.ParseException;
 
-@Service
-public class WeatherService {
-    @Autowired
-    private WeatherDataFactory dataFactory;
+import java.io.IOException;
 
-    public WeatherService(WeatherDataFactory dataFactory) {
-        this.dataFactory = dataFactory;
-    }
-
-    public WeatherData getWeatherData(String apiResponse) {
-        return dataFactory.createWeatherData(apiResponse);
-    }
+public interface WeatherService {
+    WeatherResponseDTO getWeatherData(String cityName) throws IOException, ParseException;
 }

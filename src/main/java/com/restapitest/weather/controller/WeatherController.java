@@ -1,12 +1,13 @@
 package com.restapitest.weather.controller;
 
-import com.restapitest.weather.dto.WeatherData;
-import com.restapitest.weather.dto.WeatherDataWrapper;
-import com.restapitest.weather.service.OpenWeatherService;
+import com.restapitest.weather.dto.WeatherResponseDTO;
 import com.restapitest.weather.service.WeatherService;
-import lombok.AllArgsConstructor;
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -14,16 +15,14 @@ import java.io.IOException;
 @RequestMapping("/weather")
 public class WeatherController {
     private final WeatherService weatherService;
-    private final OpenWeatherService openWeatherService;
 
     @Autowired
-    public WeatherController(WeatherService weatherService, OpenWeatherService openWeatherService) {
+    public WeatherController(WeatherService weatherService) {
         this.weatherService = weatherService;
-        this.openWeatherService = openWeatherService;
     }
 
     @GetMapping("/{cityName}")
-    public WeatherDataWrapper getWeatherData (@PathVariable String cityName) throws IOException {
-        return openWeatherService.getWeatherData(cityName);
+    public WeatherResponseDTO getWeatherData(@PathVariable String cityName) throws IOException, ParseException {
+        return weatherService.getWeatherData(cityName);
     }
 }
