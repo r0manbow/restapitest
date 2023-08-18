@@ -25,4 +25,10 @@ public class WeatherController {
     public WeatherResponseDTO getWeatherData(@PathVariable String cityName) throws IOException, ParseException {
         return weatherService.getWeatherData(cityName);
     }
+
 }
+
+
+
+
+

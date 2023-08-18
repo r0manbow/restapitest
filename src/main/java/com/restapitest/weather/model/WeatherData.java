@@ -82,4 +82,5 @@ public class WeatherData {
         private String description;
         private String icon;
     }
+
 }

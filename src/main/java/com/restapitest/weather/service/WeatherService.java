@@ -7,4 +7,6 @@ import java.io.IOException;
 
 public interface WeatherService {
     WeatherResponseDTO getWeatherData(String cityName) throws IOException, ParseException;
+
 }
+
