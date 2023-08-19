@@ -1,6 +1,6 @@
 package com.restapitest.weather.controller;
 
-import com.restapitest.weather.dto.WeatherResponseDTO;
+import com.restapitest.weather.model.OpenWeatherData;
 import com.restapitest.weather.service.WeatherService;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,8 @@ public class WeatherController {
     }
 
     @GetMapping("/{cityName}")
-    public WeatherResponseDTO getWeatherData(@PathVariable String cityName) throws IOException, ParseException {
+    public OpenWeatherData getWeatherData(@PathVariable String cityName) throws IOException, ParseException {
         return weatherService.getWeatherData(cityName);
     }
 
 }
-
-
-
-
-

@@ -1,7 +1,7 @@
 package com.restapitest.weather.repository;
 
-import com.restapitest.weather.model.WeatherData;
+import com.restapitest.weather.model.OpenWeatherData;
 
 public interface WeatherRepository {
-    WeatherData save(WeatherData weatherData);
+    OpenWeatherData save(OpenWeatherData openWeatherData);
 }

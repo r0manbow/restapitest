@@ -3,7 +3,7 @@ package com.restapitest.weather.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restapitest.weather.dto.WeatherResponseDTO;
 import com.restapitest.weather.mapper.WeatherMapper;
-import com.restapitest.weather.model.WeatherData;
+import com.restapitest.weather.model.OpenWeatherData;
 import com.restapitest.weather.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -23,16 +23,16 @@ public class WeatherServiceImpl implements WeatherService {
     private final WeatherMapper weatherMapper;
 
     @Override
-    public WeatherResponseDTO getWeatherData(String cityName) throws IOException, ParseException {
-        String url = WeatherData.API_URL
+    public OpenWeatherData getWeatherData(String cityName) throws IOException, ParseException {
+        String url = WeatherResponseDTO.API_URL
                 + "?q="
                 + cityName
                 + "&lang="
-                + WeatherData.LANG_RU
+                + WeatherResponseDTO.LANG_RU
                 + "&appid="
-                + WeatherData.API_KEY
+                + WeatherResponseDTO.API_KEY
                 + "&units="
-                + WeatherData.METRIC;
+                + WeatherResponseDTO.METRIC;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(url);
@@ -40,11 +40,10 @@ public class WeatherServiceImpl implements WeatherService {
         String jsonResponse = EntityUtils.toString(response.getEntity());
 
         ObjectMapper objectMapper = new ObjectMapper();
-        WeatherData weatherData = objectMapper.readValue(jsonResponse, WeatherData.class);
-
-        weatherRepository.save(weatherData);
-        System.out.println(weatherMapper.weatherDataToWeatherResponseDTO(weatherData));
-        return weatherMapper.weatherDataToWeatherResponseDTO(weatherData);
+        WeatherResponseDTO dto = objectMapper.readValue(jsonResponse, WeatherResponseDTO.class);
+        OpenWeatherData openWeatherData = weatherMapper.weatherResponseDTOToOpenWeatherData(dto);
+        weatherRepository.save(openWeatherData);
+        return openWeatherData;
     }
 
 }
