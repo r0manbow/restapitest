@@ -2,26 +2,23 @@ package com.restapitest.weather.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.restapitest.weather.dto.OpenWeatherResponseDTO;
 import lombok.Data;
+
+import java.util.ArrayList;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OpenWeatherData {
-    @JsonProperty("Город")
+public class WeatherData {
     private String cityName;
 
-    @JsonProperty("Температура")
     private double temperature;
 
-    @JsonProperty("Облачность")
     private int cloudiness;
 
-    @JsonProperty("Описание погоды")
-    private String weatherDescription;
+    private ArrayList<OpenWeatherResponseDTO.Weather> weather;
 
-    @JsonProperty("Скорость ветра")
     private double windSpeed;
 
-    @JsonProperty("Страна")
     private String country;
 }

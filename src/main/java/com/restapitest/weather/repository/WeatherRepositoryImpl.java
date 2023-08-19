@@ -1,7 +1,7 @@
 package com.restapitest.weather.repository;
 
 import com.restapitest.weather.mapper.WeatherMapper;
-import com.restapitest.weather.model.OpenWeatherData;
+import com.restapitest.weather.model.WeatherData;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -13,8 +13,8 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     }
 
     @Override
-    public OpenWeatherData save(OpenWeatherData openWeatherData) {
+    public WeatherData save(WeatherData weatherData) {
 
-        return openWeatherData;
+        return weatherData;
     }
 }

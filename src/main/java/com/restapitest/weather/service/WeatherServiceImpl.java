@@ -1,9 +1,9 @@
 package com.restapitest.weather.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.restapitest.weather.dto.WeatherResponseDTO;
+import com.restapitest.weather.dto.OpenWeatherResponseDTO;
 import com.restapitest.weather.mapper.WeatherMapper;
-import com.restapitest.weather.model.OpenWeatherData;
+import com.restapitest.weather.model.WeatherData;
 import com.restapitest.weather.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -23,16 +23,16 @@ public class WeatherServiceImpl implements WeatherService {
     private final WeatherMapper weatherMapper;
 
     @Override
-    public OpenWeatherData getWeatherData(String cityName) throws IOException, ParseException {
-        String url = WeatherResponseDTO.API_URL
+    public WeatherData getWeatherData(String cityName) throws IOException, ParseException {
+        String url = OpenWeatherResponseDTO.API_URL
                 + "?q="
                 + cityName
                 + "&lang="
-                + WeatherResponseDTO.LANG_RU
+                + OpenWeatherResponseDTO.LANG_RU
                 + "&appid="
-                + WeatherResponseDTO.API_KEY
+                + OpenWeatherResponseDTO.API_KEY
                 + "&units="
-                + WeatherResponseDTO.METRIC;
+                + OpenWeatherResponseDTO.METRIC;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(url);
@@ -40,10 +40,10 @@ public class WeatherServiceImpl implements WeatherService {
         String jsonResponse = EntityUtils.toString(response.getEntity());
 
         ObjectMapper objectMapper = new ObjectMapper();
-        WeatherResponseDTO dto = objectMapper.readValue(jsonResponse, WeatherResponseDTO.class);
-        OpenWeatherData openWeatherData = weatherMapper.weatherResponseDTOToOpenWeatherData(dto);
-        weatherRepository.save(openWeatherData);
-        return openWeatherData;
+        OpenWeatherResponseDTO dto = objectMapper.readValue(jsonResponse, OpenWeatherResponseDTO.class);
+        WeatherData weatherData = weatherMapper.weatherResponseDTOToOpenWeatherData(dto);
+        weatherRepository.save(weatherData);
+        return weatherData;
     }
 
 }
