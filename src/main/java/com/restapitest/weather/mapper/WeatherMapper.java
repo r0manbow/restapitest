@@ -12,5 +12,18 @@ public interface WeatherMapper {
     @Mapping(source = "weatherDescription", target = "weather[0].description")
     @Mapping(source = "windSpeed", target = "wind.speed")
     @Mapping(source = "country", target = "sys.country")
-    OpenWeatherData weatherResponseDTOToOpenWeatherData(WeatherResponseDTO dto);
-}
+
+    default OpenWeatherData weatherResponseDTOToOpenWeatherData(WeatherResponseDTO dto) {
+            OpenWeatherData openWeatherData = new OpenWeatherData();
+
+            openWeatherData.setCityName(dto.getName());
+            openWeatherData.setTemperature(dto.getMain().getTemp());
+            openWeatherData.setCloudiness(dto.getClouds().getAll());
+            openWeatherData.setWeatherDescription(dto.getWeather()[0].getDescription());
+            openWeatherData.setWindSpeed(dto.getWind().getSpeed());
+            openWeatherData.setCountry(dto.getSys().getCountry());
+
+            return openWeatherData;
+        }
+    }
+
